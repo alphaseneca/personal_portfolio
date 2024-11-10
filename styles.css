@@ -6,11 +6,12 @@
 
 /* Navbar styling */
 nav {
-	height: 60px;
+	box-sizing: border-box; /* Add box-sizing property which makes the width of the element exclude padding */
+	height: 48px;
 	width: 100%;
 	background-color: #d9d9d9;
-	display: flex; /* Change to flex display */
-	justify-content: space-between; /* Align items horizontally */
+	display: flex; /*Change to flex display */
+	justify-content: space-between; /* Align items horizontally*/
 	align-items: center;
 	/* padding: 0 20px 0 20px; /* top | right | bottom | left */
 }
@@ -22,12 +23,12 @@ label.personal-logo {
 
 nav .personal-logo {
 	height: 48px;
-	margin-left: 50px;
+	margin-left: 16px;
 	align-items: flex-start;
 }
 
 nav ul {
-	margin-right: 20px;
+	margin-right: 16px;
 	display: flex; /* Add flex display */
 	justify-content: center; /* Align items horizontally */
 	align-items: center; /* Align items vertically */
@@ -37,7 +38,7 @@ nav ul li {
 	/* display: inline-block; Remove display */
 	/* line-height: 60px; Remove line-height */
 	list-style: none;
-	margin: 0 10px;
+	margin: 0 8px;
 }
 
 .social-icons {
@@ -47,24 +48,34 @@ nav ul li {
 }
 
 @media screen and (max-width: 576px) {
-	* {
+	/* * {
 		margin: 0;
 		padding: 0;
 	}
+	nav {
+		height: 48px;
+		width: 100%;
+	} */
 
 	nav .personal-logo {
-		height: 35px;
-		margin-left: 32px;
+		height: 48px;
+		margin-left: 8px;
 		align-items: flex-start;
+	}
+	nav ul li {
+		/* display: inline-block; Remove display */
+		/* line-height: 60px; Remove line-height */
+		list-style: none;
+		margin: 0 8px;
 	}
 
 	.social-icons {
-		width: 24px; /* Adjust width for smaller screens */
-		height: 24px; /* Adjust height for smaller screens */
-		margin-right: 8px; /* Adjust margin for smaller screens */
+		width: 24px; /* Adjust width for smaller screens*/
+		height: 24px; /*Adjust height for smaller screens */
+		margin-right: 0px; /*Adjust margin for smaller screens*/
 	}
 }
-
+*/
 /* Body background color */
 body {
 	background-color: #f3f4f6;
@@ -72,7 +83,7 @@ body {
 }
 
 html {
-	scroll-snap-type: y mandatory; /* Enable snap scrolling */
+	/* scroll-snap-type: y mandatory; Enable snap scrolling */
 }
 /* Content alignment and styling */
 .content {
@@ -102,8 +113,11 @@ html {
 
 /* Styles for the profile image */
 .profile-image {
-	width: 350px; /* Set the width of the image */
-	height: auto; /* Maintain aspect ratio */
+	width: 400px;
+	height: 500px;
+	/* width: 350px; /* Set the width of the image */
+	/* height: auto; Maintain aspect ratio  */
+	object-fit: cover;
 }
 
 /* Styles for the right column (60%) */
@@ -114,22 +128,23 @@ html {
 }
 
 /* Media query for smartphones */
-@media (max-width: 576px) {
-	.container {
-		flex-direction: column; /* Stack divs vertically */
-	}
-	.left-div {
-		flex: 1; /* Full width for left div on mobile */
-	}
-	.right-div {
-		flex: 1; /* Full width for right div on mobile */
-	}
 
-	.profile-image {
-		width: 200px; /* Set the width of the image */
-		height: auto; /* Maintain aspect ratio */
-	}
-}
+/* @media (max-width: 576px) { */
+/* .container { */
+/* flex-direction: column; Stack divs vertically */
+/* } */
+/* .left-div { */
+/* flex: 1; Full width for left div on mobile */
+/* } */
+/* .right-div { */
+/* flex: 1; Full width for right div on mobile */
+/* } */
+
+/* .profile-image {
+		width: 200px; Set the width of the image */
+/* height: auto; Maintain aspect ratio */
+/* } */
+/* }  */
 /* Section titles */
 .section-title {
 	font-size: 2.5rem;
