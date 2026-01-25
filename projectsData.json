@@ -1,0 +1,26 @@
+[
+  {
+    "type": "software",
+    "title": "Title of Project",
+    "description": "Short Description",
+    "link": "#"
+  },
+  {
+    "type": "software",
+    "title": "Title of Project",
+    "description": "Short Description",
+    "link": "#"
+  },
+  {
+    "type": "hardware",
+    "title": "Title of Project",
+    "description": "Short Description",
+    "link": "#"
+  },
+  {
+    "type": "hardware",
+    "title": "Title of Project",
+    "description": "Short Description",
+    "link": "#"
+  }
+] 

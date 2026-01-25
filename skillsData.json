@@ -1,0 +1,19 @@
+{
+  "tools": [
+    {"id": "kicad", "name": "KICAD 7", "description": "An opensource and free PCB fabricating tool used by hobbyists and professionals.", "confidence": 85, "experience": "2 years of designing and fabricating"},
+    {"id": "fusion360", "name": "Fusion 360", "description": "Professional 3D CAD/CAM software for product design and manufacturing.", "confidence": 75, "experience": "1.5 years of 3D modeling and simulation"},
+    {"id": "arduino", "name": "Arduino IDE", "description": "Development environment for Arduino microcontroller programming.", "confidence": 90, "experience": "3 years of embedded programming"},
+    {"id": "figma", "name": "Figma", "description": "Collaborative interface design tool for UI/UX design and prototyping.", "confidence": 70, "experience": "1 year of interface design"},
+    {"id": "fritzing", "name": "Fritzing", "description": "Electronic prototyping platform for designers and hobbyists.", "confidence": 80, "experience": "2 years of circuit prototyping"},
+    {"id": "logisim", "name": "Logisim", "description": "Educational tool for designing and simulating digital logic circuits.", "confidence": 85, "experience": "2 years of digital circuit design"},
+    {"id": "mqtt", "name": "MQTT", "description": "Lightweight messaging protocol for IoT device communication.", "confidence": 75, "experience": "1.5 years of IoT development"},
+    {"id": "matlab", "name": "MATLAB", "description": "High-level programming language for numerical computation and data analysis.", "confidence": 80, "experience": "2 years of mathematical modeling"}
+  ],
+  "languages": [
+    {"id": "cpp", "name": "C++", "description": "General-purpose programming language for system and application development.", "confidence": 80, "experience": "2.5 years of programming"},
+    {"id": "sql", "name": "SQL", "description": "Standard language for managing and manipulating relational databases.", "confidence": 70, "experience": "1 year of database management"},
+    {"id": "dart", "name": "Dart", "description": "Programming language optimized for mobile and web app development.", "confidence": 75, "experience": "1.5 years of Flutter development"},
+    {"id": "react", "name": "React JS", "description": "JavaScript library for building user interfaces and web applications.", "confidence": 65, "experience": "1 year of web development"},
+    {"id": "html", "name": "HTML CSS", "description": "Markup and styling languages for creating web pages and interfaces.", "confidence": 85, "experience": "2 years of web development"}
+  ]
+}

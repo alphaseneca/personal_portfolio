@@ -1,0 +1,34 @@
+[
+  {
+    "type": "work",
+    "title": "Market Research Intern",
+    "company": "Chimpvine",
+    "location": "",
+    "date": "Present",
+    "description": ""
+  },
+  {
+    "type": "work",
+    "title": "AI Research Intern",
+    "company": "Danson Solutions",
+    "location": "",
+    "date": "Jun, 2023",
+    "description": ""
+  },
+  {
+    "type": "education",      
+    "title": "Bachelor in Electronics, Communication and Electronics Engineering",
+    "company": "Pashchimanchal Campus",
+    "location": "Lamachaur, Pokhara",
+    "date": "Present",
+    "description": ""
+  },
+  {
+    "type": "education",
+    "title": "+2 Science",
+    "company": "Nepal Model Secondary School",
+    "location": "Tandi, Chitwan",
+    "date": "2020",
+    "description": ""
+  }
+] 

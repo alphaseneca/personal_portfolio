@@ -1,88 +1,147 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
-		<title>Ukesh Aryal</title>
-		<link rel="icon" type="image/png" href="assets/icons/logo-ua.png" sizes="16x16">
+		<title>Ukesh Aryal - Electronics Engineer</title>
+		<link rel="icon" type="image/png" href="assets/icons/logo-ua.png" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+			rel="stylesheet"
+		/>
+		<link
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+			rel="stylesheet"
+		/>
 		<link rel="stylesheet" href="styles.css" />
 		<script src="script.js"></script>
 	</head>
+
 	<body>
-		<nav>
-			<label for="personal-logo"><img src="assets/icons/logo-ua-transparent.png" alt="personal-logo" class="personal-logo"
-				/></label>
-			<ul>
-				<li>
-					<a href="https://twitter.com" target="_blank"> <img class ="social-icons" src="assets/icons/twitter.png" alt="Twitter"/> </a>
-				</li>
-				<li>
-					<a href="https://facebook.com" target="_blank"> <img class ="social-icons" src="assets/icons/facebook.png" alt="Facebook"/> </a>
-				</li>
-				<li>
-					<a href="https://instagram.com" target="_blank"> <img  class ="social-icons" src="assets/icons/instagram.png" alt="Instagram"/> </a>
-				</li>
-				<li>
-					<a href="https://linkedin.com" target="_blank"> <img  class ="social-icons" src="assets/icons/linkedin.png" alt="LinkedIn"/> </a>
-				</li>
-				<li>
-					<a href="https://github.com" target="_blank"> <img  class ="social-icons" src="assets/icons/github.png" alt="Github"/> </a>
-				</li>
-			</ul>
-		</nav>
-		<!-- Intro Block -->
-		<section class="intro-section">
-			<div class="content">
-                <div class="left-column" background-color="aliceblue">
-                    <div class ="intro-text">
-                    <h1>I'M</h1>
-                    <h1>UKESH</h1>
-                    <h1>Aryal</h1>
-                    </div>
-                    <!-- <img src="assets/asset1.jpg" alt="profile-image" height="200px" class="profile-image"
-					/> -->
-                </div>
-                <div class="right-column">
-                    <!-- Content for the right column goes here -->
-                    <h2>60% Block</h2>
-                    <p>It seems like you've entered "Lorem Ipsum", which is commonly used as a placeholder text in design and publishing to demonstrate the visual form of a document without relying on meaningful content. If you need further assistance or have any questions, feel free to ask!</p>
-                </div>
-            </div>
-			</div>
-		</section>
+		<div class="container">
+			<!-- Header -->
+			<header>
+				<div class="logo"></div>
+				<div class="social-links">
+					<a href="https://x.com/ukesh_aryal" target="_blank"
+						><img
+							class="social-icons"
+							src="assets/icons/twitter.png"
+							alt="Twitter"
+					/></a>
+					<a href="https://www.facebook.com/ukesh.aryal/" target="_blank"
+						><img
+							class="social-icons"
+							src="assets/icons/facebook.png"
+							alt="Facebook"
+					/></a>
+					<a href="https://www.instagram.com/ukesh_aryal/" target="_blank"
+						><img
+							class="social-icons"
+							src="assets/icons/instagram.png"
+							alt="Instagram"
+					/></a>
+					<a href="https://www.linkedin.com/in/ukesh-aryal/" target="_blank"
+						><img
+							class="social-icons"
+							src="assets/icons/linkedin.png"
+							alt="LinkedIn"
+					/></a>
+					<a href="https://github.com/alphaseneca" target="_blank"
+						><img
+							class="social-icons"
+							src="assets/icons/github.png"
+							alt="Github"
+					/></a>
+				</div>
+			</header>
 
-		<!-- Skills Block -->
-		<section class="skills-section">
-			<div class="content">
-				<h2 class="section-title">Skills</h2>
-				<!-- Your skills content goes here -->
-			</div>
-		</section>
+			<!-- Hero Section -->
+			<section class="hero">
+				<div class="hero-identity">
+					<div class="hero-block">
+						<div class="hero-hi-group">
+							<img src="assets/segment_--.png" alt="Decoration" class="hero-hi-segment segment-dash" />
+							<img src="assets/segment_hi.png" alt="HI" class="hero-hi-segment segment-text" />
+						</div>
+						<div class="hero-name-block">
+							<span>I'M</span>
+							<span>UKESH</span>
+							<span>ARYAL.</span>
+						</div>
+					</div>
+					<div class="hero-image-overlap">
+						<img src="assets/profile-img.jpg" alt="Ukesh Aryal" />
+					</div>
+				</div>
+				<div class="hero-content">
+					<p class="hero-description">
+						I am an Electronics Engineer dedicated to bridging the gap between innovative hardware design and efficient software solutions. Specializing in embedded systems and cross-platform development, I transform complex technical challenges into scalable, real-world products. From architecting PCBs to building high-performance applications in C++ and Dart, I thrive on engineering precision and creative problem-solving.
+					</p>
+					<button class="connect-btn">Connect with me!</button>
+				</div>
+			</section>
 
-		<!-- Experiences Block -->
-		<section class="experiences-section">
-			<div class="content">
-				<h2 class="section-title">Experiences</h2>
-				<!-- Your experiences content goes here -->
-			</div>
-		</section>
+			<!-- Skills Block -->
+			<section class="skills-section">
+				<h2 class="section-title">I can help you with..</h2>
+				<div class="skills-container">
+					<div class="skills-right active" id="skillPanel">
+						<div class="skill-info">
+							<h3 id="skillTitle"></h3>
+							<p class="skill-description" id="skillDesc"></p>
+							<div class="confidence-section">
+								<h4>Confidence:</h4>
+								<div class="progress-bar">
+									<div
+										class="progress-fill"
+										id="progressBar"
+										style="width: 0%"
+									></div>
+								</div>
+								<p class="experience-text" id="experienceText"></p>
+							</div>
+						</div>
+					</div>
+					<div class="skills-left">
+						<div class="skill-category">
+							<h3 class="category-title">Tools</h3>
+							<div class="skills-grid" id="toolsGrid"></div>
+						</div>
+						<div class="skill-category">
+							<h3 class="category-title">Languages</h3>
+							<div class="skills-grid" id="languagesGrid"></div>
+						</div>
+					</div>
+				</div>
+			</section>
 
-		<!-- Projects Block -->
-		<section class="projects-section">
-			<div class="content">
+			<!-- Education & Experience -->
+			<section class="timeline-section">
+				<h2 class="section-title">Education & Experience</h2>
+				<div class="timeline-wrapper">
+					<div class="timeline-scroll" id="workTimeline">
+						<div class="timeline" id="workTimelineItems"></div>
+					</div>
+					<div class="timeline-scroll" id="educationTimeline">
+						<div class="timeline" id="educationTimelineItems"></div>
+					</div>
+				</div>
+			</section>
+
+			<!-- Projects Section -->
+			<section class="projects-section">
 				<h2 class="section-title">Projects</h2>
-				<!-- Your projects content goes here -->
-			</div>
-		</section>
-
-		<!-- Contact Block -->
-		<section class="contact-section">
-			<div class="content">
-				<h2 class="section-title">Contact</h2>
-				<!-- Your contact content goes here -->
-			</div>
-		</section>
+				<div class="projects-grid">
+					<div class="project-category" id="softwareProjects">
+						<h3>Software</h3>
+					</div>
+					<div class="project-category" id="hardwareProjects">
+						<h3>Hardware</h3>
+					</div>
+				</div>
+			</section>
+		</div>
+		<script src="script.js"></script>
 	</body>
 </html>
