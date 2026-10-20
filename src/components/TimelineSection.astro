@@ -1,0 +1,260 @@
+---
+import timelineData from '../data/timeline.json';
+
+const workItems = timelineData.filter((item) => item.type === 'work');
+const educationItems = timelineData.filter((item) => item.type === 'education');
+---
+
+<section class="w-full max-w-7xl 2xl:max-w-[1600px] mx-auto px-5 sm:px-8 md:px-12 py-8 sm:py-12">
+  <h2 class="font-heading font-bold text-3xl sm:text-4xl xl:text-5xl text-gray-900 dark:text-[#f1f3f9] mb-8 sm:mb-10 transition-colors">
+    Education & Experience
+  </h2>
+
+  <div class="space-y-10 sm:space-y-12">
+    
+    <!-- Track 1: Work Experience -->
+    <div class="space-y-3">
+      <h3 class="font-heading font-bold text-xl sm:text-2xl text-gray-900 dark:text-[#f1f3f9] tracking-tight px-1 transition-colors">
+        Experience
+      </h3>
+      <div class="timeline-container">
+        <div id="workScroll" class="timeline-scroll-area">
+          <div class="timeline-rail">
+            <div class="timeline-items-row">
+              {workItems.map((item, idx) => (
+                <div class={`timeline-entry ${idx === 0 ? 'min-w-[300px]' : 'min-w-[260px]'} group`}>
+                  
+                  <!-- 1. Date label: strictly above the line -->
+                  <div class="timeline-date-label">
+                    {item.date}
+                  </div>
+
+                  <!-- 2. Milestone Node Dot: centered on the line -->
+                  <div class="timeline-node-dot"></div>
+
+                  <!-- 3. Job / Organization Info: strictly below the line -->
+                  <div class="timeline-details">
+                    <h3 class="font-heading font-bold text-lg sm:text-xl text-black dark:text-[#f1f3f9] leading-snug transition-colors">
+                      {item.title}
+                    </h3>
+                    <p class="font-sans text-sm sm:text-base font-semibold text-gray-900 dark:text-[#e2e8f0] transition-colors">
+                      {item.company}
+                    </p>
+                    {item.location && (
+                      <p class="font-sans text-xs sm:text-sm font-medium text-gray-700 dark:text-[#94a3b8] transition-colors">
+                        {item.location}
+                      </p>
+                    )}
+                  </div>
+
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Track 2: Education -->
+    <div class="space-y-3">
+      <h3 class="font-heading font-bold text-xl sm:text-2xl text-gray-900 dark:text-[#f1f3f9] tracking-tight px-1 transition-colors">
+        Education
+      </h3>
+      <div class="timeline-container">
+        <div id="eduScroll" class="timeline-scroll-area">
+          <div class="timeline-rail">
+            <div class="timeline-items-row">
+              {educationItems.map((item) => (
+                <div class="timeline-entry min-w-[320px] sm:min-w-[380px] group">
+                  
+                  <!-- 1. Date label: strictly above the line -->
+                  <div class="timeline-date-label">
+                    {item.date}
+                  </div>
+
+                  <!-- 2. Milestone Node Dot: centered on the line -->
+                  <div class="timeline-node-dot"></div>
+
+                  <!-- 3. Education Info: strictly below the line -->
+                  <div class="timeline-details">
+                    <h3 class="font-heading font-bold text-lg sm:text-xl text-black dark:text-[#f1f3f9] leading-snug transition-colors">
+                      {item.title}
+                    </h3>
+                    <p class="font-sans text-sm sm:text-base font-semibold text-gray-900 dark:text-[#e2e8f0] transition-colors">
+                      {item.company}
+                    </p>
+                    {item.location && (
+                      <p class="font-sans text-xs sm:text-sm font-medium text-gray-700 dark:text-[#94a3b8] transition-colors">
+                        {item.location}
+                      </p>
+                    )}
+                  </div>
+
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Independent drag & scroll script -->
+<script>
+  function enableIndependentTimelineScroll(id: string) {
+    const slider = document.getElementById(id);
+    if (!slider) return;
+
+    let isDown = false;
+    let startX = 0;
+    let startScrollLeft = 0;
+
+    slider.addEventListener('mousedown', (e) => {
+      isDown = true;
+      slider.classList.add('cursor-grabbing');
+      startX = e.pageX - slider.offsetLeft;
+      startScrollLeft = slider.scrollLeft;
+    });
+
+    window.addEventListener('mouseleave', () => {
+      if (isDown) {
+        isDown = false;
+        slider.classList.remove('cursor-grabbing');
+      }
+    });
+
+    window.addEventListener('mouseup', () => {
+      if (isDown) {
+        isDown = false;
+        slider.classList.remove('cursor-grabbing');
+      }
+    });
+
+    slider.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - slider.offsetLeft;
+      const walk = (x - startX) * 1.5;
+      slider.scrollLeft = startScrollLeft - walk;
+    });
+  }
+
+  enableIndependentTimelineScroll('workScroll');
+  enableIndependentTimelineScroll('eduScroll');
+</script>
+
+<style>
+  .timeline-container {
+    width: 100%;
+    position: relative;
+  }
+
+  /* Smooth side-fade mask so horizontal scroll never looks harshly clipped */
+  .timeline-scroll-area {
+    width: 100%;
+    overflow-x: auto;
+    cursor: grab;
+    user-select: none;
+    padding-top: 8px;
+    padding-bottom: 16px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    mask-image: linear-gradient(to right, transparent 0%, black 44px, black calc(100% - 44px), transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 44px, black calc(100% - 44px), transparent 100%);
+  }
+
+  .timeline-scroll-area::-webkit-scrollbar {
+    display: none;
+  }
+
+  .timeline-scroll-area.cursor-grabbing {
+    cursor: grabbing;
+  }
+
+  .timeline-rail {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    width: max-content;
+    min-width: max(100%, 1800px);
+    padding-left: 44px;
+    padding-right: 360px;
+  }
+
+  /* Horizontal axis line — spans 100% of the rail, continuing 360px past the last item */
+  .timeline-rail::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 37px;
+    left: 0;
+    right: 0;
+    height: 0;
+    border-top: 1.5px solid #94a3b8;
+    pointer-events: none;
+    z-index: 0;
+    transition: border-color 0.2s ease;
+  }
+
+  :global(.dark) .timeline-rail::before {
+    border-color: #474c5e;
+  }
+
+  .timeline-items-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 96px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .timeline-entry {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: 400px;
+  }
+
+  .timeline-date-label {
+    height: 24px;
+    line-height: 24px;
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 700;
+    color: #000000;
+    margin-bottom: 8px;
+    white-space: nowrap;
+    transition: color 0.2s ease;
+  }
+
+  :global(.dark) .timeline-date-label {
+    color: #ffffff;
+  }
+
+  .timeline-node-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #000000;
+    margin-bottom: 14px;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+  }
+
+  :global(.dark) .timeline-node-dot {
+    background-color: #cbd5e1;
+  }
+
+  .group:hover .timeline-node-dot {
+    transform: scale(1.35);
+    background-color: #ff4444 !important;
+  }
+
+  .timeline-details {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding-right: 16px;
+  }
+</style>

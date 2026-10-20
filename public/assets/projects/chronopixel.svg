@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <!-- Bezel Finish -->
+    <linearGradient id="chronoFrame" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2a2d3d"/>
+      <stop offset="100%" stop-color="#14161f"/>
+    </linearGradient>
+    <radialGradient id="pixelGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ff5555"/>
+      <stop offset="100%" stop-color="#ff2222"/>
+    </radialGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="1.5" flood-color="#ff4444" flood-opacity="0.6"/>
+    </filter>
+  </defs>
+
+  <!-- Display Enclosure -->
+  <rect x="4" y="10" width="56" height="44" rx="8" fill="url(#chronoFrame)" stroke="#383c50" stroke-width="1.5"/>
+
+  <!-- Matrix Screen Bezel -->
+  <rect x="8" y="14" width="48" height="36" rx="4" fill="#090a0f" stroke="#1d202d" stroke-width="1"/>
+
+  <!-- Digital Clock Pixel Grid: Displaying time '12:00' / LED matrix dots -->
+  <g filter="url(#glow)" fill="url(#pixelGlow)">
+    <!-- Digit 1: column of pixels -->
+    <rect x="13" y="21" width="3.2" height="3.2" rx="0.8"/>
+    <rect x="13" y="26" width="3.2" height="3.2" rx="0.8"/>
+    <rect x="13" y="31" width="3.2" height="3.2" rx="0.8"/>
+    <rect x="13" y="36" width="3.2" height="3.2" rx="0.8"/>
+    <rect x="13" y="41" width="3.2" height="3.2" rx="0.8"/>
+
+    <!-- Digit 2: 2 pattern -->
+    <rect x="20" y="21" width="3.2" height="3.2" rx="0.8"/>
+    <rect x="24" y="21" width="3.2" height="3.2" rx="0.8"/>
+    <rect x="28" y="21" width="3.2" height="3.2" rx="0.8"/>
+    <rect x="28" y="26" width="3.2" height="3.2" rx="0.8"/>
+    <rect x="20" y="31" width="3.2" height="3.2" rx="0.8"/>
+    <rect x="24" y="31" width="3.2" height="3.2" rx="0.8"/>
+    <rect x="28" y="31" width="3.2" height="3.2" rx="0.8"/>
+    <rect x="20" y="36" width="3.2" height="3.2" rx="0.8"/>
+    <rect x="20" y="41" width="3.2" height="3.2" rx="0.8"/>
+    <rect x="24" y="41" width="3.2" height="3.2" rx="0.8"/>
+    <rect x="28" y="41" width="3.2" height="3.2" rx="0.8"/>
+
+    <!-- Colon Dots -->
+    <circle cx="34" cy="27" r="1.8"/>
+    <circle cx="34" cy="35" r="1.8"/>
+
+    <!-- Digit 0: loop -->
+    <rect x="40" y="21" width="3.2" height="3.2" rx="0.8"/>
+    <rect x="44" y="21" width="3.2" height="3.2" rx="0.8"/>
+    <rect x="48" y="21" width="3.2" height="3.2" rx="0.8"/>
+    <rect x="40" y="26" width="3.2" height="3.2" rx="0.8"/>
+    <rect x="48" y="26" width="3.2" height="3.2" rx="0.8"/>
+    <rect x="40" y="31" width="3.2" height="3.2" rx="0.8"/>
+    <rect x="48" y="31" width="3.2" height="3.2" rx="0.8"/>
+    <rect x="40" y="36" width="3.2" height="3.2" rx="0.8"/>
+    <rect x="48" y="36" width="3.2" height="3.2" rx="0.8"/>
+    <rect x="40" y="41" width="3.2" height="3.2" rx="0.8"/>
+    <rect x="44" y="41" width="3.2" height="3.2" rx="0.8"/>
+    <rect x="48" y="41" width="3.2" height="3.2" rx="0.8"/>
+  </g>
+</svg>

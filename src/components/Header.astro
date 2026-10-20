@@ -1,0 +1,183 @@
+---
+/**
+ * Header Component
+ * Houses the clean 7-segment digital LED display emblem,
+ * social profile links, and binary logic theme toggle switch (0 = Dark, 1 = Light).
+ * Zero red bleed in light mode.
+ */
+import profile from '../data/profile.json';
+import ThemeToggle from './ThemeToggle.astro';
+---
+
+<header class="w-full flex items-center justify-between pt-3 sm:pt-4 pb-2 px-4 sm:px-8 md:px-12 max-w-7xl 2xl:max-w-[1536px] mx-auto relative z-30">
+  <!-- Signature 7-Segment Brand Display Emblem -->
+  <a
+    id="segmentEmblemLink"
+    href="#"
+    class="group flex items-center shrink-0 focus:outline-none"
+    aria-label={`${profile.name} - Home`}
+    title="Click to cycle 7-segment display"
+  >
+    <div
+      id="segmentEmblemBox"
+      class="relative w-28 h-18 min-[360px]:w-32 min-[360px]:h-20 sm:w-44 sm:h-28 lg:w-48 lg:h-30 select-none transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+    >
+      <!-- Initial Segment: '--' Test Pattern -->
+      <img
+        id="segmentDash"
+        src="/assets/segment_--.png"
+        alt="UA Segment Initializing"
+        class="absolute inset-0 w-full h-full object-contain object-left segment-dash-boot"
+      />
+
+      <!-- Settled Segment: 'HI' Display -->
+      <img
+        id="segmentHi"
+        src="/assets/segment_hi.png"
+        alt="UA Display HI"
+        class="absolute inset-0 w-full h-full object-contain object-left segment-hi-boot"
+      />
+    </div>
+  </a>
+
+  <!-- Right Actions: Social Icons Navigation + Binary Hardware Toggle Switch (0 / 1) -->
+  <div class="flex items-center gap-2 sm:gap-4 md:gap-5">
+    <!-- Social Profile Icons -->
+    <nav class="flex items-center gap-1.5 sm:gap-2.5" aria-label="Social Profiles">
+      {profile.socials.map((social) => (
+        <a
+          href={social.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={social.platform}
+          class="w-8 h-8 sm:w-9 sm:h-9 rounded-full border border-gray-300 dark:border-[#353846] bg-white dark:bg-[#252834] flex items-center justify-center transition-all duration-300 hover:border-black dark:hover:border-neutral-300 hover:bg-gray-100 dark:hover:bg-[#303444] hover:scale-110 shadow-2xs shrink-0"
+        >
+          <img
+            src={social.icon}
+            alt={social.platform}
+            class="w-4 h-4 sm:w-4 sm:h-4 object-contain grayscale opacity-80 hover:grayscale-0 hover:opacity-100 dark:invert dark:opacity-85 transition-all"
+          />
+        </a>
+      ))}
+    </nav>
+
+    <!-- Binary Hardware Toggle Switch (0 = Dark, 1 = Light) -->
+    <ThemeToggle />
+  </div>
+</header>
+
+<script>
+  // Interactive Re-trigger Animation on 7-Segment Display Click
+  const emblem = document.getElementById('segmentEmblemBox');
+  const dashImg = document.getElementById('segmentDash');
+  const hiImg = document.getElementById('segmentHi');
+
+  let isCycling = false;
+
+  function cycleDisplay() {
+    if (isCycling || !dashImg || !hiImg) return;
+    isCycling = true;
+
+    const isDark = document.documentElement.classList.contains('dark');
+
+    // Remove boot classes
+    dashImg.classList.remove('segment-dash-boot');
+    hiImg.classList.remove('segment-hi-boot');
+
+    // Fast digital test flicker
+    dashImg.style.opacity = '1';
+    hiImg.style.opacity = '0';
+    if (isDark) {
+      dashImg.style.filter = 'drop-shadow(0 0 6px rgba(255, 68, 68, 0.6))';
+    } else {
+      dashImg.style.filter = 'none';
+    }
+
+    setTimeout(() => {
+      dashImg.style.opacity = '0.3';
+    }, 120);
+
+    setTimeout(() => {
+      dashImg.style.opacity = '1';
+    }, 240);
+
+    setTimeout(() => {
+      dashImg.style.opacity = '0';
+      dashImg.style.filter = 'none';
+      hiImg.style.opacity = '1';
+      if (isDark) {
+        hiImg.style.filter = 'drop-shadow(0 0 8px rgba(255, 68, 68, 0.7))';
+      } else {
+        hiImg.style.filter = 'none';
+      }
+    }, 380);
+
+    setTimeout(() => {
+      hiImg.style.filter = isDark ? 'drop-shadow(0 0 4px rgba(255, 68, 68, 0.4))' : 'none';
+      isCycling = false;
+    }, 900);
+  }
+
+  emblem?.addEventListener('click', (e) => {
+    e.preventDefault();
+    cycleDisplay();
+  });
+</script>
+
+<style>
+  /* 
+   * Crisp 7-Segment Digital LED Boot Sequence
+   * Clean opacity transitions with ZERO drop-shadow bleed on light mode
+   */
+  .segment-dash-boot {
+    animation: digitalBootDash 0.8s ease-in-out forwards;
+    filter: none;
+  }
+
+  .segment-hi-boot {
+    opacity: 0;
+    animation: digitalBootHi 0.9s ease-in-out forwards;
+    filter: none;
+  }
+
+  @keyframes digitalBootDash {
+    0% {
+      opacity: 0;
+    }
+    20% {
+      opacity: 0.95;
+    }
+    40% {
+      opacity: 0.3;
+    }
+    60% {
+      opacity: 1;
+    }
+    85% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes digitalBootHi {
+    0%, 75% {
+      opacity: 0;
+    }
+    85% {
+      opacity: 0.7;
+    }
+    92% {
+      opacity: 0.4;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  /* Only in dark mode, provide subtle glowing LED ambiance */
+  :global(.dark) .segment-hi-boot {
+    filter: drop-shadow(0 0 4px rgba(255, 68, 68, 0.45));
+  }
+</style>

@@ -1,0 +1,475 @@
+---
+/**
+ * Skills Section Component
+ * 100% Dynamic - reads directly from skills.json.
+ * Enlarged diamond cards (98px) for effortless legibility and tap targets.
+ * Mobile-first responsive hierarchy: Interactive diamonds first, directly connected to live description card below.
+ * Automatic centering on initial active skill on mobile viewports.
+ * Side-fade blur mask and drag-to-scroll matching Education & Experience.
+ */
+import skillsData from '../data/skills.json';
+
+interface SkillItem {
+  id: string;
+  name: string;
+  category?: string;
+  description: string;
+  confidence: number;
+  experience: string;
+  gx?: number;
+  gy?: number;
+  label?: string;
+}
+
+const standardRows = [
+  [{ gx: 0, gy: 0 }],
+  [{ gx: -1, gy: 1 }, { gx: 1, gy: 1 }, { gx: 3, gy: 1 }],
+  [{ gx: -2, gy: 2 }, { gx: 0, gy: 2 }, { gx: 2, gy: 2 }, { gx: 4, gy: 2 }],
+  [{ gx: -3, gy: 3 }, { gx: -1, gy: 3 }, { gx: 1, gy: 3 }, { gx: 3, gy: 3 }, { gx: 5, gy: 3 }],
+  [{ gx: -2, gy: 4 }, { gx: 0, gy: 4 }, { gx: 2, gy: 4 }, { gx: 4, gy: 4 }],
+  [{ gx: -1, gy: 5 }, { gx: 1, gy: 5 }, { gx: 3, gy: 5 }, { gx: 5, gy: 5 }],
+  [{ gx: 0, gy: 6 }, { gx: 2, gy: 6 }, { gx: 4, gy: 6 }],
+  [{ gx: 1, gy: 7 }, { gx: 3, gy: 7 }]
+].flat();
+
+const allSkills = (skillsData as SkillItem[]).map((skill, index) => {
+  const fallbackCoord = standardRows[index % standardRows.length] || { gx: 0, gy: Math.floor(index / 3) };
+  const gx = typeof skill.gx === 'number' ? skill.gx : fallbackCoord.gx;
+  const gy = typeof skill.gy === 'number' ? skill.gy : fallbackCoord.gy;
+  const label = skill.label || skill.name;
+
+  return {
+    ...skill,
+    gx,
+    gy,
+    label
+  };
+});
+
+// Dynamic bounding box calculation with enlarged diamond dimensions
+const minGx = Math.min(...allSkills.map((s) => s.gx));
+const maxGx = Math.max(...allSkills.map((s) => s.gx));
+const minGy = Math.min(...allSkills.map((s) => s.gy));
+const maxGy = Math.max(...allSkills.map((s) => s.gy));
+
+// Tight interlocking diamond matrix spacing
+const dx = 74;
+const dy = 74;
+const paddingX = 72;
+const paddingY = 68;
+
+const stageWidth = (maxGx - minGx) * dx + paddingX * 2;
+const stageHeight = (maxGy - minGy) * dy + paddingY * 2;
+
+const initialSkill = allSkills.find((s) => s.id === 'kicad') || allSkills[0];
+---
+
+<section id="skills" class="w-full max-w-7xl 2xl:max-w-[1536px] mx-auto px-4 sm:px-8 md:px-12 py-8 sm:py-12">
+  <h2 class="font-heading font-bold text-3xl sm:text-4xl xl:text-5xl text-gray-900 dark:text-[#f1f3f9] mb-6 sm:mb-8 transition-colors">
+    I can help you with..
+  </h2>
+
+  <!-- Responsive Grid: On mobile, diamonds are shown first (order-1), with live telemetry card directly connected below (order-2) -->
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+    
+    <!-- Interactive Diamond Mesh Column (Order 1 on mobile, Order 2 on desktop) -->
+    <div class="lg:col-span-7 flex flex-col items-center justify-center w-full min-w-0 order-1 lg:order-2">
+      
+      <!-- Horizontal Scroll Area with Smooth Blur/Fade Mask -->
+      <div id="skillsScrollArea" class="skills-scroll-area">
+        <div class="skills-rail" style={`min-width: ${stageWidth}px;`}>
+
+          <!-- Fixed Stage for the continuous interlocking diamond lattice -->
+          <div
+            id="meshStage"
+            class="isometric-mesh-stage"
+            style={`width: ${stageWidth}px; height: ${stageHeight}px;`}
+          >
+            {allSkills.map((skill, index) => {
+              // SSR initial organic noise so the page has character before JS
+              const sTilts = [-8.0, 7.2, -6.5, 8.5, -7.0, 6.8, -9.0, 7.5, -6.0, 8.0, -7.5, 6.5];
+              const sJittersX = [-7, 6, -5, 7, -6, 5, -8, 6, -5, 7, -6, 5];
+              const sJittersY = [6, -7, 6, -5, 7, -6, 5, -7, 6, -5, 7, -6];
+              const sSizes = [92, 105, 94, 102, 91, 106, 95, 103, 93, 104, 90, 101];
+              const sZIndexes = [11, 15, 12, 16, 13, 17, 11, 15, 12, 16, 13, 17];
+
+              const baseLeftPx = paddingX + (skill.gx - minGx) * dx;
+              const baseTopPx = paddingY + (skill.gy - minGy) * dy;
+
+              const tilt = sTilts[index % sTilts.length];
+              const rot = 45 + tilt;
+              const jitterX = sJittersX[index % sJittersX.length];
+              const jitterY = sJittersY[index % sJittersY.length];
+              const size = sSizes[index % sSizes.length];
+              const zIdx = sZIndexes[index % sZIndexes.length];
+
+              const leftPx = baseLeftPx + jitterX;
+              const topPx = baseTopPx + jitterY;
+
+              return (
+                <button
+                  type="button"
+                  class={`iso-diamond ${skill.id === initialSkill.id ? 'active' : ''}`}
+                  data-skill-id={skill.id}
+                  data-base-left={baseLeftPx}
+                  data-base-top={baseTopPx}
+                  data-left-px={leftPx}
+                  style={`--base-left: ${baseLeftPx}px; --base-top: ${baseTopPx}px; --noise-left: ${leftPx}px; --noise-top: ${topPx}px; --rot: ${rot}deg; --diamond-size: ${size}px; --z-idx: ${zIdx};`}
+                  aria-label={skill.name}
+                >
+                  <span class="iso-content" set:html={skill.label} />
+                </button>
+              );
+            })}
+          </div>
+
+          <!-- Dynamic runtime noise generator: renders distinctly different on every single refresh/visit -->
+          <script is:inline>
+            (function applyOrganicNoise() {
+              var diamonds = document.querySelectorAll('.iso-diamond');
+              diamonds.forEach(function (d) {
+                var baseLeft = parseFloat(d.getAttribute('data-base-left') || '0');
+                var baseTop = parseFloat(d.getAttribute('data-base-top') || '0');
+                if (!baseLeft || !baseTop) return;
+
+                // Noticeable random noise across size, angle, and position on every refresh:
+                // 1. Size noise: 89px to 107px (spread of 18px)
+                var sizeNoise = (Math.random() - 0.5) * 18;
+                // 2. Angle noise: 36° to 54° (±9° noticeable tilt)
+                var rotNoise = (Math.random() - 0.5) * 18;
+                // 3. Position X & Y noise: ±8px
+                var noiseX = (Math.random() - 0.5) * 16;
+                var noiseY = (Math.random() - 0.5) * 16;
+                // 4. Layering depth
+                var zIdx = 10 + Math.floor(Math.random() * 15);
+
+                var finalSize = Math.round(98 + sizeNoise);
+                var finalRot = (45 + rotNoise).toFixed(2);
+                var finalLeft = (baseLeft + noiseX).toFixed(1);
+                var finalTop = (baseTop + noiseY).toFixed(1);
+
+                d.style.setProperty('--base-left', baseLeft + 'px');
+                d.style.setProperty('--base-top', baseTop + 'px');
+                d.style.setProperty('--noise-left', finalLeft + 'px');
+                d.style.setProperty('--noise-top', finalTop + 'px');
+                d.style.setProperty('--diamond-size', finalSize + 'px');
+                d.style.setProperty('--rot', finalRot + 'deg');
+                d.style.setProperty('--z-idx', zIdx);
+                d.setAttribute('data-left-px', finalLeft);
+              });
+            })();
+          </script>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Live Selected Skill Detail Telemetry Panel (Order 2 on mobile, Order 1 on desktop) -->
+    <div class="lg:col-span-5 w-full max-w-lg mx-auto lg:mx-0 order-2 lg:order-1">
+      <div class="flex flex-col justify-between bg-white/90 dark:bg-[#202330]/95 p-5 sm:p-7 rounded-3xl border border-gray-200 dark:border-[#35394a] shadow-xs dark:shadow-black/40 backdrop-blur-xs transition-colors min-h-[260px] sm:min-h-[300px]">
+        
+        <!-- Skill Title & Description -->
+        <div class="flex flex-col">
+          <div class="flex items-center justify-between mb-2">
+            <span
+              id="skillCategoryBadge"
+              class="text-[11px] font-mono uppercase tracking-wider text-gray-500 dark:text-gray-400 font-semibold"
+            >
+              {initialSkill.category || 'Skill'}
+            </span>
+          </div>
+
+          <h3
+            id="skillDetailTitle"
+            class="font-heading font-extrabold text-2xl sm:text-3xl lg:text-[32px] text-black dark:text-[#f1f3f9] tracking-tight mb-3 transition-colors break-words leading-tight"
+          >
+            {initialSkill.name}
+          </h3>
+          <p
+            id="skillDetailDesc"
+            class="text-gray-700 dark:text-[#cbd5e1] text-sm sm:text-base leading-relaxed transition-colors break-words"
+          >
+            {initialSkill.description}
+          </p>
+        </div>
+
+        <!-- Confidence Bar & Experience Metric -->
+        <div class="flex flex-col gap-4 pt-5 mt-4 border-t border-gray-100 dark:border-[#2d3140]">
+          <!-- Confidence Bar -->
+          <div>
+            <div class="flex justify-between items-center mb-2">
+              <span class="font-heading font-semibold text-sm sm:text-base text-gray-900 dark:text-[#e2e8f0]">
+                Confidence :
+              </span>
+              <span id="skillDetailPercent" class="font-mono text-sm font-bold text-gray-900 dark:text-[#f1f3f9]">
+                {initialSkill.confidence}%
+              </span>
+            </div>
+            <div class="w-full h-2.5 bg-[#e0e0e0] dark:bg-[#333748] rounded-full overflow-hidden">
+              <div
+                id="skillProgressBar"
+                class="h-full bg-black dark:bg-[#ff4444] rounded-full transition-all duration-500 ease-out"
+                style={`width: ${initialSkill.confidence}%`}
+              ></div>
+            </div>
+          </div>
+
+          <!-- Experience Detail -->
+          <div>
+            <span class="font-heading font-semibold text-sm sm:text-base text-gray-900 dark:text-[#e2e8f0] block mb-1">
+              Experience :
+            </span>
+            <p id="skillDetailExp" class="text-gray-600 dark:text-gray-400 text-sm sm:text-base transition-colors leading-normal break-words">
+              {initialSkill.experience}
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Interactive Script for Dynamic Skill Switching & Auto-centering on Mobile -->
+<script define:vars={{ allSkills }}>
+  const titleEl = document.getElementById('skillDetailTitle');
+  const badgeEl = document.getElementById('skillCategoryBadge');
+  const descEl = document.getElementById('skillDetailDesc');
+  const percentEl = document.getElementById('skillDetailPercent');
+  const progressEl = document.getElementById('skillProgressBar');
+  const expEl = document.getElementById('skillDetailExp');
+  const diamonds = document.querySelectorAll('.iso-diamond');
+  const scrollArea = document.getElementById('skillsScrollArea');
+
+  function selectSkill(skillId) {
+    const skill = allSkills.find((s) => s.id === skillId);
+    if (!skill) return;
+
+    diamonds.forEach((d) => {
+      if (d.dataset.skillId === skillId) {
+        d.classList.add('active');
+      } else {
+        d.classList.remove('active');
+      }
+    });
+
+    if (badgeEl) badgeEl.textContent = skill.category || 'Skill';
+    if (titleEl) titleEl.textContent = skill.name;
+    if (descEl) descEl.textContent = skill.description;
+    if (percentEl) percentEl.textContent = `${skill.confidence}%`;
+    if (progressEl) {
+      progressEl.style.width = '0%';
+      requestAnimationFrame(() => {
+        progressEl.style.width = `${skill.confidence}%`;
+      });
+    }
+    if (expEl) expEl.textContent = skill.experience;
+  }
+
+  diamonds.forEach((diamond) => {
+    diamond.addEventListener('click', () => selectSkill(diamond.dataset.skillId));
+    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      diamond.addEventListener('mouseenter', () => selectSkill(diamond.dataset.skillId));
+    }
+  });
+
+  // Auto-center scroll on initial active skill on mobile load
+  function centerActiveSkill() {
+    if (!scrollArea) return;
+    const activeDiamond = scrollArea.querySelector('.iso-diamond.active');
+    if (activeDiamond) {
+      const leftPx = parseFloat(activeDiamond.getAttribute('data-left-px') || '0');
+      const targetScroll = leftPx - scrollArea.clientWidth / 2;
+      scrollArea.scrollLeft = Math.max(0, targetScroll);
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', centerActiveSkill);
+  setTimeout(centerActiveSkill, 150);
+
+  // Drag-to-scroll implementation matching the Education & Experience timeline
+  if (scrollArea) {
+    let isDown = false;
+    let startX = 0;
+    let scrollLeft = 0;
+    let hasDragged = false;
+
+    scrollArea.addEventListener('mousedown', (e) => {
+      isDown = true;
+      hasDragged = false;
+      scrollArea.classList.add('cursor-grabbing');
+      startX = e.pageX - scrollArea.offsetLeft;
+      scrollLeft = scrollArea.scrollLeft;
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - scrollArea.offsetLeft;
+      const walk = (x - startX) * 1.4;
+      if (Math.abs(walk) > 5) {
+        hasDragged = true;
+      }
+      scrollArea.scrollLeft = scrollLeft - walk;
+    });
+
+    window.addEventListener('mouseup', () => {
+      if (!isDown) return;
+      isDown = false;
+      scrollArea.classList.remove('cursor-grabbing');
+    });
+
+    scrollArea.addEventListener('click', (e) => {
+      if (hasDragged) {
+        e.stopPropagation();
+        hasDragged = false;
+      }
+    }, true);
+  }
+</script>
+
+<style>
+  /* Side-fade mask matching the timeline: content never looks abruptly clipped */
+  .skills-scroll-area {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    cursor: grab;
+    user-select: none;
+    padding-top: 14px;
+    padding-bottom: 16px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    mask-image: linear-gradient(to right, transparent 0%, black 28px, black calc(100% - 28px), transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 28px, black calc(100% - 28px), transparent 100%);
+  }
+
+  .skills-scroll-area::-webkit-scrollbar {
+    display: none;
+  }
+
+  .skills-rail {
+    position: relative;
+    padding: 0 32px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* Fixed Stage for the interlocking diamond mesh */
+  .isometric-mesh-stage {
+    position: relative;
+    user-select: none;
+  }
+
+  /* Organically scattered diamond cards with runtime noise */
+  .iso-diamond {
+    position: absolute;
+    left: var(--noise-left, 0px);
+    top: var(--noise-top, 0px);
+    width: var(--diamond-size, 98px);
+    height: var(--diamond-size, 98px);
+    background-color: #e5e5e5;
+    border: 1px solid #dcdcdc;
+    border-radius: 18px;
+    transform: translate(-50%, -50%) rotate(var(--rot, 45deg));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition:
+      left 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+      top 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+      width 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+      height 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+      transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      box-shadow 0.25s ease;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+    z-index: var(--z-idx, 10);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  :global(.dark) .iso-diamond {
+    background-color: #272a38;
+    border-color: #383c4e;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+  }
+
+  /* Desktop hover effect: snaps to original grid position, 98px size, and 45deg angle */
+  @media (hover: hover) and (pointer: fine) {
+    .iso-diamond:hover {
+      left: var(--base-left) !important;
+      top: var(--base-top) !important;
+      width: 98px !important;
+      height: 98px !important;
+      transform: translate(-50%, -50%) rotate(45deg) !important;
+      background-color: #dadada;
+      border-color: #b8b8b8;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.2);
+      z-index: 40 !important;
+    }
+
+    .iso-diamond:hover .iso-content {
+      transform: rotate(-45deg) !important;
+    }
+
+    :global(.dark) .iso-diamond:hover {
+      background-color: #303444;
+      border-color: #4a5068;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+    }
+  }
+
+  /* Active selected diamond: snaps to original grid position, 98px size, and 45deg angle */
+  .iso-diamond.active {
+    left: var(--base-left) !important;
+    top: var(--base-top) !important;
+    width: 98px !important;
+    height: 98px !important;
+    transform: translate(-50%, -50%) rotate(45deg) !important;
+    background-color: #000000 !important;
+    border-color: #000000 !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    z-index: 45 !important;
+  }
+
+  .iso-diamond.active .iso-content {
+    color: #ffffff !important;
+    font-weight: 700;
+    transform: rotate(-45deg) !important;
+  }
+
+  :global(.dark) .iso-diamond.active {
+    background-color: #ff4444 !important;
+    border-color: #ff4444 !important;
+    box-shadow: 0 10px 32px rgba(255, 68, 68, 0.45);
+  }
+
+  /* Diamond Label Text: Perfectly centered & unclipped */
+  .iso-content {
+    transform: rotate(calc(-1 * var(--rot, 45deg)));
+    font-family: var(--font-heading);
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #4b5563;
+    text-align: center;
+    line-height: 1.18;
+    transition: color 0.2s ease, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    pointer-events: none;
+    white-space: normal;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 78px;
+    overflow-wrap: break-word;
+  }
+
+  :global(.dark) .iso-content {
+    color: #cbd5e1;
+  }
+</style>

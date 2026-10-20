@@ -1,0 +1,174 @@
+---
+/**
+ * Projects Section Component
+ * Displays Software and Hardware projects side-by-side with central vertical divider.
+ * Uses official project icons when available (KiForge, PhoneScan Companion, Cryptick Token),
+ * and clean generic fallback icons for the rest.
+ * iconBg from projects.json sets the card background to match the icon's own background color,
+ * eliminating white corner gaps between the icon's internal border-radius and the card's radius.
+ */
+import projectsData from '../data/projects.json';
+
+const softwareProjects = projectsData.filter((p) => p.type === 'software');
+const hardwareProjects = projectsData.filter((p) => p.type === 'hardware');
+---
+
+<section class="w-full max-w-7xl 2xl:max-w-[1536px] mx-auto px-5 sm:px-8 md:px-12 py-8 sm:py-12">
+  <h2 class="font-heading font-bold text-3xl sm:text-4xl xl:text-5xl text-gray-900 dark:text-[#f1f3f9] mb-8 transition-colors">
+    Projects
+  </h2>
+
+  <div class="relative">
+
+    <!-- Central Vertical Divider for Desktop -->
+    <div class="hidden md:block absolute top-0 bottom-0 left-1/2 w-[1px] bg-gray-300 dark:bg-[#323646] -translate-x-1/2 transition-colors"></div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+
+      <!-- Software Projects Column -->
+      <div class="flex flex-col md:pr-8">
+        <h3 class="font-heading font-bold text-2xl sm:text-3xl text-gray-900 dark:text-[#f1f3f9] mb-8 pb-3 border-b border-gray-200 dark:border-[#323646] md:border-none transition-colors">
+          Software
+        </h3>
+
+        <div class="flex flex-col gap-8 sm:gap-10">
+          {softwareProjects.map((project) => (
+            <article class="flex items-start gap-4 sm:gap-5 group">
+              <!-- Thumbnail Box -->
+              <a
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={project.title}
+                class="project-thumb w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-2xl bg-[#e5e5ea] dark:bg-[#202330] border border-black/10 dark:border-white/10 shrink-0 flex items-center justify-center overflow-hidden"
+                style={project.iconBg ? `background-color: ${project.iconBg};` : ''}
+              >
+                {project.image ? (
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    class={`w-full h-full ${project.image.endsWith('.svg') ? 'object-contain p-2.5' : 'object-cover'}`}
+                    loading="lazy"
+                  />
+                ) : (
+                  <div class="w-full h-full bg-[#e5e5ea] dark:bg-[#202330] flex items-center justify-center group-hover:bg-[#d5d5da] dark:group-hover:bg-[#2a2d40] transition-colors">
+                    <svg
+                      class="w-8 h-8 sm:w-10 sm:h-10 text-gray-600 dark:text-gray-300 group-hover:text-black dark:group-hover:text-[#ff4444] transition-colors"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="1.8"
+                        d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
+                      />
+                    </svg>
+                  </div>
+                )}
+              </a>
+
+              <!-- Project Title & Description -->
+              <div class="flex flex-col flex-1 min-w-0 pt-0.5">
+                <h4>
+                  <a
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="font-heading font-bold text-base sm:text-lg md:text-xl text-gray-900 dark:text-[#f1f3f9] hover:text-[#ff4444] transition-colors leading-snug block"
+                  >
+                    {project.title}
+                  </a>
+                </h4>
+                <p class="font-sans text-xs sm:text-sm text-gray-600 dark:text-[#94a3b8] mt-1.5 leading-relaxed transition-colors">
+                  {project.description}
+                </p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+
+      <!-- Hardware Projects Column -->
+      <div class="flex flex-col md:pl-8 mt-10 md:mt-0">
+        <h3 class="font-heading font-bold text-2xl sm:text-3xl text-gray-900 dark:text-[#f1f3f9] mb-8 pb-3 border-b border-gray-200 dark:border-[#323646] md:border-none transition-colors">
+          Hardware
+        </h3>
+
+        <div class="flex flex-col gap-8 sm:gap-10">
+          {hardwareProjects.map((project) => (
+            <article class="flex items-start gap-4 sm:gap-5 group">
+              <!-- Thumbnail Box -->
+              <a
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={project.title}
+                class="project-thumb w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-2xl bg-[#e5e5ea] dark:bg-[#202330] border border-black/10 dark:border-white/10 shrink-0 flex items-center justify-center overflow-hidden"
+                style={project.iconBg ? `background-color: ${project.iconBg};` : ''}
+              >
+                {project.image ? (
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    class={`w-full h-full ${project.image.endsWith('.svg') ? 'object-contain p-2.5' : 'object-cover'}`}
+                    loading="lazy"
+                  />
+                ) : (
+                  <div class="w-full h-full bg-[#e5e5ea] dark:bg-[#202330] flex items-center justify-center group-hover:bg-[#d5d5da] dark:group-hover:bg-[#2a2d40] transition-colors">
+                    <svg
+                      class="w-8 h-8 sm:w-10 sm:h-10 text-gray-600 dark:text-gray-300 group-hover:text-black dark:group-hover:text-[#ff4444] transition-colors"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="1.8"
+                        d="M9 3v2m6-2v2M9 19v2m6-2v2M3 9h2m-2 6h2m14-6h2m-2 6h2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"
+                      />
+                    </svg>
+                  </div>
+                )}
+              </a>
+
+              <!-- Project Title & Description -->
+              <div class="flex flex-col flex-1 min-w-0 pt-0.5">
+                <h4>
+                  <a
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="font-heading font-bold text-base sm:text-lg md:text-xl text-gray-900 dark:text-[#f1f3f9] hover:text-[#ff4444] transition-colors leading-snug block"
+                  >
+                    {project.title}
+                  </a>
+                </h4>
+                <p class="font-sans text-xs sm:text-sm text-gray-600 dark:text-[#94a3b8] mt-1.5 leading-relaxed transition-colors">
+                  {project.description}
+                </p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .project-thumb {
+    transition: opacity 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+  .group:hover .project-thumb {
+    opacity: 0.92;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  }
+  :global(.dark) .group:hover .project-thumb {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+  }
+</style>

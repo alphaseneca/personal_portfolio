@@ -1,0 +1,138 @@
+---
+import profile from '../data/profile.json';
+---
+
+<div
+  id="contactModal"
+  class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-200"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="modalTitle"
+>
+  <div
+    id="modalCard"
+    class="relative w-full max-w-md bg-white dark:bg-[#1a1c26] rounded-2xl p-6 sm:p-7 shadow-2xl border border-gray-200/80 dark:border-neutral-700/60 transform scale-95 transition-all duration-200"
+  >
+    <!-- Modal Header -->
+    <div class="flex items-center justify-between mb-2">
+      <h3 id="modalTitle" class="font-heading font-bold text-xl text-gray-900 dark:text-white">
+        Let's Connect
+      </h3>
+      <!-- Close Button -->
+      <button
+        id="closeModalBtn"
+        type="button"
+        class="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 dark:bg-neutral-800 dark:hover:bg-neutral-700 text-gray-500 hover:text-black dark:text-gray-400 dark:hover:text-white flex items-center justify-center transition-colors cursor-pointer"
+        aria-label="Close dialog"
+      >
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mb-5">
+      Reach out for collaborations and inquiries.
+    </p>
+
+    <!-- Email Address Card with 1-Click Copy & Direct Mailto -->
+    <div class="bg-gray-50 dark:bg-[#222532] border border-gray-200/80 dark:border-neutral-700/70 rounded-xl p-3 sm:p-3.5 mb-4 flex items-center justify-between gap-3">
+      <a
+        href={`mailto:${profile.email}`}
+        class="flex items-center gap-2.5 min-w-0 group hover:opacity-80 transition-opacity"
+        title="Open in mail client"
+      >
+        <span class="w-7 h-7 rounded-lg bg-red-500/10 text-red-500 flex items-center justify-center shrink-0">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+        </span>
+        <span id="emailText" class="font-mono text-xs sm:text-sm font-semibold text-gray-900 dark:text-white truncate select-all">
+          {profile.email}
+        </span>
+      </a>
+
+      <button
+        id="copyEmailBtn"
+        type="button"
+        class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-black hover:bg-neutral-800 dark:bg-white dark:hover:bg-neutral-200 text-white dark:text-black rounded-lg text-xs font-semibold font-heading transition-all shadow-2xs cursor-pointer shrink-0"
+      >
+        <svg id="copyIcon" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+        </svg>
+        <span id="copyBtnLabel">Copy</span>
+      </button>
+    </div>
+
+    <!-- Minimal Action Footer -->
+    <div class="flex items-center justify-end text-xs text-gray-400 dark:text-gray-500 pt-1">
+      <a
+        href={`mailto:${profile.email}`}
+        class="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white font-medium hover:underline transition-colors inline-flex items-center gap-1"
+      >
+        Open Mail Client &rarr;
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+  const modal = document.getElementById('contactModal');
+  const card = document.getElementById('modalCard');
+  const openBtn = document.getElementById('connectBtn');
+  const closeBtn = document.getElementById('closeModalBtn');
+  const copyBtn = document.getElementById('copyEmailBtn');
+  const copyLabel = document.getElementById('copyBtnLabel');
+  const emailText = document.getElementById('emailText');
+
+  function openModal() {
+    if (!modal || !card) return;
+    modal.classList.remove('opacity-0', 'pointer-events-none');
+    modal.classList.add('opacity-100', 'pointer-events-auto');
+    card.classList.remove('scale-95');
+    card.classList.add('scale-100');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    if (!modal || !card) return;
+    modal.classList.remove('opacity-100', 'pointer-events-auto');
+    modal.classList.add('opacity-0', 'pointer-events-none');
+    card.classList.remove('scale-100');
+    card.classList.add('scale-95');
+    document.body.style.overflow = '';
+  }
+
+  openBtn?.addEventListener('click', openModal);
+  closeBtn?.addEventListener('click', closeModal);
+
+  // Close on backdrop click
+  modal?.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+  });
+
+  // Close on Escape key
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal?.classList.contains('opacity-100')) {
+      closeModal();
+    }
+  });
+
+  // Copy Email action
+  copyBtn?.addEventListener('click', async () => {
+    if (!emailText) return;
+    try {
+      await navigator.clipboard.writeText(emailText.textContent?.trim() || '');
+      if (copyLabel) copyLabel.textContent = 'Copied!';
+      copyBtn.classList.add('bg-emerald-600', 'dark:bg-emerald-600', 'text-white', 'dark:text-white');
+      copyBtn.classList.remove('bg-black', 'dark:bg-white', 'dark:text-black');
+      setTimeout(() => {
+        if (copyLabel) copyLabel.textContent = 'Copy';
+        copyBtn.classList.remove('bg-emerald-600', 'dark:bg-emerald-600', 'text-white', 'dark:text-white');
+        copyBtn.classList.add('bg-black', 'dark:bg-white', 'text-white', 'dark:text-black');
+      }, 2000);
+    } catch {
+      prompt('Copy email:', emailText.textContent?.trim());
+    }
+  });
+</script>

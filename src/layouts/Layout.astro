@@ -1,0 +1,59 @@
+---
+import '../styles/global.css';
+import profile from '../data/profile.json';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = `${profile.name} - ${profile.role}`,
+  description = `Personal portfolio of ${profile.name}, ${profile.role}.`,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/png" href="/assets/icons/logo-ua.png" />
+
+    <!-- Inline script for automatic theme matching with browser & user persistence -->
+    <script is:inline>
+      (function() {
+        const savedTheme = localStorage.getItem('theme');
+        const isManual = localStorage.getItem('theme-manual') === 'true';
+
+        // Default is LIGHT mode. Only switch to dark if user has manually set it.
+        if (isManual && savedTheme === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      })();
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- OpenGraph / Social Meta -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="/assets/profile-img.jpg" />
+  </head>
+  <body class="bg-[#f5f5f5] dark:bg-[#16171d] text-gray-900 dark:text-[#e2e8f0] font-sans antialiased selection:bg-[#ff4444] selection:text-white min-h-screen transition-colors duration-300">
+    <div class="max-w-[1440px] mx-auto bg-white dark:bg-[#1e2029] min-h-screen shadow-2xl dark:shadow-black/50 border-x border-transparent dark:border-[#2b2d3a] relative overflow-x-hidden transition-colors duration-300">
+      <slot />
+    </div>
+  </body>
+</html>

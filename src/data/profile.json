@@ -1,0 +1,39 @@
+{
+  "name": "Ukesh Aryal",
+  "nameBlocks": [
+    "I'M",
+    "UKESH",
+    "ARYAL."
+  ],
+  "role": "Electronics & Embedded Systems Engineer",
+  "shortBio": "I’m an electronics engineer who likes building things that sit somewhere between hardware and software. I work across electronics, embedded systems, firmware, and the software around them — from circuit and PCB design to device interfaces, automation, and deployment.\n\nI enjoy taking ideas from a rough concept or schematic to a working system, figuring out the hardware, firmware, communication, and infrastructure along the way.\n\nOutside of work, I spend a lot of time in my home lab building, experimenting, and figuring out how things work.",
+  "email": "ukeshreceives@gmail.com",
+  "avatar": "/assets/profile-img.jpg",
+  "socials": [
+    {
+      "platform": "Twitter / X",
+      "url": "https://x.com/ukesh_aryal",
+      "icon": "/assets/icons/twitter.png"
+    },
+    {
+      "platform": "Facebook",
+      "url": "https://www.facebook.com/ukesh.aryal/",
+      "icon": "/assets/icons/facebook.png"
+    },
+    {
+      "platform": "Instagram",
+      "url": "https://www.instagram.com/ukesh_aryal/",
+      "icon": "/assets/icons/instagram.png"
+    },
+    {
+      "platform": "LinkedIn",
+      "url": "https://www.linkedin.com/in/ukesh-aryal/",
+      "icon": "/assets/icons/linkedin.png"
+    },
+    {
+      "platform": "GitHub",
+      "url": "https://github.com/alphaseneca",
+      "icon": "/assets/icons/github.png"
+    }
+  ]
+}

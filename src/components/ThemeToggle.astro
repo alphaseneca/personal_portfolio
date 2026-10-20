@@ -1,0 +1,287 @@
+---
+/**
+ * Classic Precision Toggle Switch (0 / 1)
+ * Reverted to the authentic vintage industrial toggle switch.
+ * The 1 and 0 binary logic indicators are left-aligned on the faceplate.
+ * Features straight vertical flip (scaleY), acoustic mechanical snap sound, and haptics.
+ */
+---
+
+<div class="relative flex items-center select-none shrink-0" id="vintageToggleWrapper">
+  <button
+    id="vintageSwitch"
+    type="button"
+    role="switch"
+    aria-checked="false"
+    aria-label="Toggle Light (1) or Dark (0) theme"
+    class="group relative flex flex-col items-center justify-center cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ff4444] rounded-xl transition-transform active:scale-95"
+  >
+    <svg
+      id="switchSvg"
+      class="w-9 h-14 sm:w-10 sm:h-15 overflow-visible"
+      viewBox="0 0 54 84"
+    >
+      <defs>
+        <!-- Faceplate Gradients matching site colors -->
+        <linearGradient id="plateGradLight" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#ffffff" />
+          <stop offset="100%" stop-color="#e2e8f0" />
+        </linearGradient>
+
+        <linearGradient id="plateGradDark" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#242837" />
+          <stop offset="100%" stop-color="#181a24" />
+        </linearGradient>
+
+        <!-- Bezel / Nut Collar -->
+        <linearGradient id="nutGradLight" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#ffffff" />
+          <stop offset="40%" stop-color="#cbd5e1" />
+          <stop offset="100%" stop-color="#94a3b8" />
+        </linearGradient>
+
+        <linearGradient id="nutGradDark" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#475569" />
+          <stop offset="40%" stop-color="#334155" />
+          <stop offset="100%" stop-color="#1e293b" />
+        </linearGradient>
+
+        <!-- Recessed Socket Cavity -->
+        <radialGradient id="socketCavity" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#090a0f" />
+          <stop offset="80%" stop-color="#151720" />
+          <stop offset="100%" stop-color="#222634" />
+        </radialGradient>
+
+        <!-- Chrome Bat Shaft -->
+        <linearGradient id="leverShaftGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#94a3b8" />
+          <stop offset="35%" stop-color="#ffffff" />
+          <stop offset="70%" stop-color="#cbd5e1" />
+          <stop offset="100%" stop-color="#64748b" />
+        </linearGradient>
+
+        <!-- Spherical Specular Knob Tip -->
+        <radialGradient id="leverTipGrad" cx="35%" cy="30%" r="70%">
+          <stop offset="0%" stop-color="#ffffff" />
+          <stop offset="45%" stop-color="#e2e8f0" />
+          <stop offset="80%" stop-color="#94a3b8" />
+          <stop offset="100%" stop-color="#475569" />
+        </radialGradient>
+
+        <!-- Drop Shadow for Lever -->
+        <filter id="batShadow" x="-30%" y="-30%" width="160%" height="160%">
+          <feDropShadow dx="0" dy="1.5" stdDeviation="1.5" flood-color="#000000" flood-opacity="0.35" />
+        </filter>
+      </defs>
+
+      <!-- 1. Switch Faceplate (Clean, cohesive hardware plate) -->
+      <rect
+        x="6"
+        y="4"
+        width="42"
+        height="76"
+        rx="10"
+        fill="url(#plateGradLight)"
+        class="dark:fill-[url(#plateGradDark)] transition-colors duration-300"
+        stroke="#cbd5e1"
+        class:list={['dark:stroke-[#35394a]']}
+        stroke-width="1"
+      />
+
+      <!-- 2. Logic Label: 1 (Light / ON) - Right-aligned on the faceplate -->
+      <text
+        id="labelOne"
+        x="38"
+        y="16"
+        text-anchor="middle"
+        dominant-baseline="central"
+        class="font-mono text-[11px] font-bold fill-gray-400 dark:fill-gray-500 transition-colors duration-200 pointer-events-none select-none"
+      >
+        1
+      </text>
+
+      <!-- 3. Outer Mounting Hex / Collar Ring -->
+      <circle
+        cx="27"
+        cy="42"
+        r="14"
+        fill="url(#nutGradLight)"
+        class="dark:fill-[url(#nutGradDark)] transition-colors duration-300"
+        stroke="#cbd5e1"
+        class:list={['dark:stroke-[#3b4154]']}
+        stroke-width="0.5"
+      />
+
+      <!-- 4. Inner Socket Cavity -->
+      <circle
+        cx="27"
+        cy="42"
+        r="9"
+        fill="url(#socketCavity)"
+        stroke="#000000"
+        stroke-width="0.75"
+      />
+
+      <!-- 5. Direct Straight Vertical Lever Bat (scaleY 1 = UP / 1, scaleY -1 = DOWN / 0) -->
+      <g
+        id="leverGroup"
+        class="transition-transform duration-150 ease-[cubic-bezier(0.2,0.9,0.3,1.2)]"
+        style="transform-origin: 27px 42px;"
+        filter="url(#batShadow)"
+      >
+        <!-- Tapered Chrome Bat Handle Shaft -->
+        <path
+          d="M 24.5 40 L 25 24 L 29 24 L 29.5 40 Z"
+          fill="url(#leverShaftGrad)"
+        />
+
+        <!-- Spherical Lever Tip Knob -->
+        <circle
+          cx="27"
+          cy="23"
+          r="4.5"
+          fill="url(#leverTipGrad)"
+          stroke="#94a3b8"
+          stroke-width="0.5"
+        />
+      </g>
+
+      <!-- 6. Logic Label: 0 (Dark / OFF) - Right-aligned on the faceplate -->
+      <text
+        id="labelZero"
+        x="38"
+        y="68"
+        text-anchor="middle"
+        dominant-baseline="central"
+        class="font-mono text-[11px] font-bold fill-gray-400 dark:fill-gray-500 transition-colors duration-200 pointer-events-none select-none"
+      >
+        0
+      </text>
+    </svg>
+  </button>
+</div>
+
+<script>
+  const toggleBtn = document.getElementById('vintageSwitch');
+  const leverGroup = document.getElementById('leverGroup');
+  const labelOne = document.getElementById('labelOne');
+  const labelZero = document.getElementById('labelZero');
+
+  let audioCtx: AudioContext | null = null;
+
+  function playVintageSnapSound(isFlippingUp: boolean) {
+    try {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+
+      const now = audioCtx.currentTime;
+
+      // Resonant body thud
+      const thud = audioCtx.createOscillator();
+      const thudGain = audioCtx.createGain();
+      thud.type = 'sine';
+      thud.frequency.setValueAtTime(isFlippingUp ? 180 : 140, now);
+      thud.frequency.exponentialRampToValueAtTime(35, now + 0.05);
+
+      thudGain.gain.setValueAtTime(0.22, now);
+      thudGain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+
+      thud.connect(thudGain);
+      thudGain.connect(audioCtx.destination);
+      thud.start(now);
+      thud.stop(now + 0.055);
+
+      // Crisp mechanical snap
+      const snap = audioCtx.createOscillator();
+      const snapGain = audioCtx.createGain();
+      snap.type = isFlippingUp ? 'square' : 'triangle';
+      snap.frequency.setValueAtTime(isFlippingUp ? 1350 : 1020, now);
+      snap.frequency.exponentialRampToValueAtTime(160, now + 0.026);
+
+      snapGain.gain.setValueAtTime(0.16, now);
+      snapGain.gain.exponentialRampToValueAtTime(0.001, now + 0.026);
+
+      snap.connect(snapGain);
+      snapGain.connect(audioCtx.destination);
+      snap.start(now);
+      snap.stop(now + 0.03);
+
+      // Metallic ping
+      const ping = audioCtx.createOscillator();
+      const pingGain = audioCtx.createGain();
+      ping.type = 'sine';
+      ping.frequency.setValueAtTime(isFlippingUp ? 2600 : 2100, now);
+
+      pingGain.gain.setValueAtTime(0.05, now);
+      pingGain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+
+      ping.connect(pingGain);
+      pingGain.connect(audioCtx.destination);
+      ping.start(now);
+      ping.stop(now + 0.045);
+
+      if ('vibrate' in navigator) {
+        navigator.vibrate(18);
+      }
+    } catch {
+      // Audio autoplay limitation fallback
+    }
+  }
+
+  function updateSwitchUI(isDark: boolean, withSound: boolean = false) {
+    if (!toggleBtn || !leverGroup || !labelOne || !labelZero) return;
+
+    toggleBtn.setAttribute('aria-checked', (!isDark).toString());
+
+    if (isDark) {
+      // 0 / Dark Mode: Lever flips DIRECTLY STRAIGHT DOWN (scaleY -1 around pivot 27, 42)
+      leverGroup.style.transform = 'scaleY(-1)';
+
+      // 0 illuminated, 1 dimmed
+      labelZero.classList.add('fill-[#60a5fa]', 'dark:fill-[#60a5fa]');
+      labelZero.classList.remove('fill-gray-400', 'fill-gray-500');
+      labelOne.classList.add('fill-gray-400', 'dark:fill-gray-500');
+      labelOne.classList.remove('fill-[#ff4444]', 'dark:fill-[#ff4444]');
+    } else {
+      // 1 / Light Mode: Lever flips DIRECTLY STRAIGHT UP (scaleY 1 around pivot 27, 42)
+      leverGroup.style.transform = 'scaleY(1)';
+
+      // 1 illuminated, 0 dimmed
+      labelOne.classList.add('fill-[#ff4444]', 'dark:fill-[#ff4444]');
+      labelOne.classList.remove('fill-gray-400', 'fill-gray-500');
+      labelZero.classList.add('fill-gray-400', 'dark:fill-gray-500');
+      labelZero.classList.remove('fill-[#60a5fa]', 'dark:fill-[#60a5fa]');
+    }
+
+    if (withSound) {
+      playVintageSnapSound(!isDark);
+    }
+  }
+
+  function toggleTheme() {
+    const isCurrentlyDark = document.documentElement.classList.contains('dark');
+    const newIsDark = !isCurrentlyDark;
+
+    if (newIsDark) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+    localStorage.setItem('theme-manual', 'true');
+
+    updateSwitchUI(newIsDark, true);
+  }
+
+  // Initialize on load
+  const initialDark = document.documentElement.classList.contains('dark');
+  updateSwitchUI(initialDark, false);
+
+  toggleBtn?.addEventListener('click', toggleTheme);
+</script>

@@ -1,0 +1,50 @@
+[
+  {
+    "id": "sw-1",
+    "type": "software",
+    "title": "KiForge",
+    "description": "An engineering build pipeline and tool suite for KiCad workflows and PCB design automation. Automates the generation of PCB manufacturing renders, BOMs, SVGs, STEP models, and release artifacts.",
+    "link": "https://github.com/alphaseneca/kiforge",
+    "image": "/assets/projects/kiforge.png",
+    "iconBg": "#111111"
+  },
+  {
+    "id": "sw-2",
+    "type": "software",
+    "title": "PhoneScan Companion",
+    "description": "A React Native Android companion app and USB communication library (@alphaseneca/react-native-phonescan) for the PhoneScan hardware. Connects via USB OTG for live CDC barcode streaming, hardware control, and CH55x ISP firmware flashing.",
+    "link": "https://github.com/alphaseneca/PhoneScan-Companion",
+    "image": "/assets/projects/phonescan.png",
+    "iconBg": "#0b706c"
+  },
+  {
+    "id": "sw-3",
+    "type": "software",
+    "title": "Homelab Infrastructure",
+    "description": "A self-hosted private cloud and network infrastructure built with Docker, Debian, Raspberry Pi, Cloudflare Tunnels, WireGuard, and Pi-hole for secure remote access and service hosting.",
+    "link": "https://github.com/alphaseneca"
+  },
+  {
+    "id": "hw-1",
+    "type": "hardware",
+    "title": "Cryptick Token",
+    "description": "An ESP32-S3-based hardware FIDO2/PIV/OATH security key implementing WebAuthn passkeys, smart-card authentication, and TOTP codes on physical hardware, accompanied by custom KiCad PCB designs and a Rust host daemon.",
+    "link": "https://github.com/alphaseneca/cryptick-token",
+    "image": "/assets/projects/cryptick.svg"
+  },
+  {
+    "id": "hw-2",
+    "type": "hardware",
+    "title": "ChronoPixel",
+    "description": "An addressable LED matrix smart pixel clock and time display featuring custom PCB design, RTC timekeeping, embedded firmware drivers, and customizable illumination patterns.",
+    "link": "https://github.com/alphaseneca/chronopixel",
+    "image": "/assets/projects/chronopixel.svg"
+  },
+  {
+    "id": "hw-3",
+    "type": "hardware",
+    "title": "4x4x4 LED Cube",
+    "description": "An interactive 3D volumetric LED matrix display with custom multiplexed PCB design, circuit debugging, and embedded C++ animation drivers.",
+    "link": "https://github.com/alphaseneca/4-4-4_led_cube"
+  }
+]

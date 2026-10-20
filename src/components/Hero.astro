@@ -1,0 +1,62 @@
+---
+/**
+ * Hero Section Component
+ * Features iconic overlapping name badges and portrait card lockup strictly faithful to Figma.
+ * Refined for flawless mobile presentation (iPhone 16) without excessive vertical displacement.
+ */
+import profile from '../data/profile.json';
+---
+
+<section class="w-full max-w-7xl 2xl:max-w-[1536px] mx-auto px-4 sm:px-8 md:px-12 pt-2 pb-6 sm:pb-10 overflow-x-hidden">
+  <div class="flex flex-col lg:flex-row items-center lg:items-start justify-center gap-6 sm:gap-8 lg:gap-8 xl:gap-12 w-full max-w-6xl mx-auto">
+    
+    <!-- Left Hero Identity: Overlapping Badges & Portrait Card -->
+    <div class="flex flex-row items-center sm:items-start justify-start relative shrink-0">
+      
+      <!-- Name block directly under the top logo -->
+      <div class="flex flex-col z-20 -mr-6 min-[360px]:-mr-8 sm:-mr-12 select-none shrink-0 text-left">
+        <!-- Black badges matching Figma design -->
+        <div class="flex flex-col gap-1.5 sm:gap-2.5 items-start">
+          {profile.nameBlocks.map((block) => (
+            <span class="bg-black dark:bg-[#161722] text-white font-tech font-bold text-2xl min-[360px]:text-3xl sm:text-5xl lg:text-6xl xl:text-7xl px-3.5 py-1.5 min-[360px]:px-4 min-[360px]:py-2 sm:px-6 sm:py-3 rounded-r-lg sm:rounded-r-xl shadow-lg dark:border-y dark:border-r dark:border-[#383c4e] leading-none tracking-tight">
+              {block}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <!-- Hero Portrait Card -->
+      <div class="relative z-10 w-44 min-[360px]:w-52 sm:w-72 md:w-80 xl:w-88 h-56 min-[360px]:h-64 sm:h-[450px] xl:h-[490px] rounded-[22px] min-[360px]:rounded-[26px] sm:rounded-[36px] overflow-hidden border-3 sm:border-4 border-white dark:border-[#2d303d] shadow-xl dark:shadow-black/50 bg-white dark:bg-[#252834] shrink-0 group">
+        <img
+          src={profile.avatar}
+          alt={profile.name}
+          class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          loading="eager"
+        />
+        <div class="absolute inset-0 ring-1 ring-black/5 dark:ring-white/10 rounded-[22px] min-[360px]:rounded-[26px] sm:rounded-[36px] pointer-events-none"></div>
+      </div>
+
+    </div>
+
+    <!-- Right Hero Content: Bio and Connect Action -->
+    <div class="flex flex-col items-center gap-5 sm:gap-6 w-full max-w-lg lg:max-w-xl xl:max-w-2xl mt-2 lg:mt-0">
+      <!-- Bio: all paragraphs displayed on all screen sizes -->
+      <div class="flex flex-col gap-3 sm:gap-4 w-full">
+        {profile.shortBio.split('\n\n').map((paragraph) => (
+          <p class="text-base sm:text-lg lg:text-[19px] font-semibold leading-relaxed text-gray-950 dark:text-[#f1f3f9] font-sans tracking-normal text-justify">
+            {paragraph}
+          </p>
+        ))}
+      </div>
+
+      <button
+        id="connectBtn"
+        type="button"
+        class="group relative inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 text-lg sm:text-2xl font-heading font-semibold text-[#ff4444] bg-[#eaeaea] dark:bg-[#272a38] hover:bg-[#ffe0e0] dark:hover:bg-[#ff4444]/20 rounded-2xl transition-all duration-300 shadow-xs hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 cursor-pointer border border-transparent dark:border-[#ff4444]/30 self-center"
+      >
+        <span class="tracking-wide">Connect with me !</span>
+      </button>
+    </div>
+
+  </div>
+</section>

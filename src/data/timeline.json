@@ -1,0 +1,56 @@
+[
+  {
+    "id": "work-1",
+    "type": "work",
+    "title": "Electronics Engineer II",
+    "company": "Yarsa Tech (P) Ltd.",
+    "location": "Nepal · On-site",
+    "date": "Present",
+    "description": "Full-time electronics engineering across embedded systems, PCB design, connected IoT devices, and hardware-software architectures."
+  },
+  {
+    "id": "work-2",
+    "type": "work",
+    "title": "Electronics Engineering Intern",
+    "company": "Yarsa Tech (P) Ltd.",
+    "location": "Nepal · On-site",
+    "date": "May, 2025",
+    "description": "Hardware prototyping, circuit debugging, and firmware integration across POS hardware and connected embedded systems."
+  },
+  {
+    "id": "work-3",
+    "type": "work",
+    "title": "H5P Developer",
+    "company": "ChimpVine Global",
+    "location": "Remote",
+    "date": "Nov, 2023",
+    "description": "Developed interactive educational modules, rich interactive media, and structured content architectures using H5P and JSON."
+  },
+  {
+    "id": "work-4",
+    "type": "work",
+    "title": "Research Intern",
+    "company": "ChimpVine Global",
+    "location": "Remote",
+    "date": "Jun, 2023",
+    "description": "Conducted market research, technical investigation, and product analysis for digital learning solutions and educational platforms."
+  },
+  {
+    "id": "edu-1",
+    "type": "education",
+    "title": "Bachelor in Electronics, Communication and Information Engineering",
+    "company": "Pashchimanchal Campus, IOE",
+    "location": "Pokhara, Nepal",
+    "date": "Present",
+    "description": "Engineering education covering electronics, communication systems, circuits, and embedded hardware, providing a foundation for work across PCB design, firmware, and integrated electronic systems."
+  },
+  {
+    "id": "edu-2",
+    "type": "education",
+    "title": "+2 Science",
+    "company": "Nepal Model Secondary School",
+    "location": "Tandi, Chitwan",
+    "date": "2020",
+    "description": "Major in Physics, Mathematics, and Computer Science with academic excellence."
+  }
+]
