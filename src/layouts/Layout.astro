@@ -34,7 +34,17 @@ const {
         } else {
           document.documentElement.classList.remove('dark');
         }
+
+        // Do not restore previous scroll position on refresh — always boot from top
+        if ('scrollRestoration' in history) {
+          history.scrollRestoration = 'manual';
+        }
+        window.scrollTo(0, 0);
       })();
+
+      window.addEventListener('DOMContentLoaded', function() {
+        window.scrollTo(0, 0);
+      });
     </script>
 
     <!-- Google Fonts -->
