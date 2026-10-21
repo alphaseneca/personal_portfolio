@@ -1,0 +1,86 @@
+---
+/**
+ * Footer Component
+ * Clean, modern footer faithful to the portfolio's aesthetic.
+ * Sourced dynamically from profile.json with social profiles,
+ * copyright, and a smooth back-to-top action.
+ */
+import profile from '../data/profile.json';
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="w-full border-t border-gray-200 dark:border-[#2d303d] mt-12 sm:mt-16 transition-colors">
+  <div class="max-w-7xl 2xl:max-w-[1536px] mx-auto px-5 sm:px-8 md:px-12 py-8 sm:py-10">
+    <div class="flex flex-col md:flex-row items-center md:items-center justify-between gap-6 sm:gap-8">
+      
+      <!-- Brand & Identity Column -->
+      <div class="flex flex-col items-center md:items-start text-center md:text-left gap-1">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-[#ff4444] animate-pulse"></span>
+          <span class="font-heading font-bold text-lg sm:text-xl text-gray-900 dark:text-[#f1f3f9] tracking-tight transition-colors">
+            {profile.name}
+          </span>
+        </div>
+        <p class="font-sans text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400 transition-colors">
+          {profile.role}
+        </p>
+        <p class="font-mono text-[11px] text-gray-400 dark:text-gray-500 mt-1">
+          © {currentYear} {profile.name}. All rights reserved.
+        </p>
+      </div>
+
+      <!-- Right Actions: Social Links & Back to Top -->
+      <div class="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
+        <!-- Social Profiles -->
+        <nav class="flex items-center gap-2" aria-label="Footer Social Links">
+          {profile.socials.map((social) => (
+            <a
+              href={social.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={social.platform}
+              class="w-8 h-8 rounded-full border border-gray-300 dark:border-[#353846] bg-white dark:bg-[#252834] flex items-center justify-center transition-all duration-300 hover:border-black dark:hover:border-neutral-300 hover:bg-gray-100 dark:hover:bg-[#303444] hover:scale-110 shadow-2xs shrink-0"
+              title={social.platform}
+            >
+              <img
+                src={social.icon}
+                alt={social.platform}
+                class="w-4 h-4 object-contain grayscale opacity-80 hover:grayscale-0 hover:opacity-100 dark:invert dark:opacity-85 transition-all"
+                loading="lazy"
+              />
+            </a>
+          ))}
+        </nav>
+
+        <!-- Back to Top Button -->
+        <button
+          id="backToTopBtn"
+          type="button"
+          class="group inline-flex items-center gap-2 px-3.5 py-1.5 text-xs font-mono font-medium text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white bg-gray-100 dark:bg-[#252834] hover:bg-gray-200 dark:hover:bg-[#303444] border border-gray-300/80 dark:border-[#353846] rounded-xl transition-all duration-200 cursor-pointer shadow-2xs hover:-translate-y-0.5 active:translate-y-0"
+          title="Scroll back to top"
+        >
+          <span>Top</span>
+          <svg
+            class="w-3.5 h-3.5 transition-transform duration-200 group-hover:-translate-y-0.5 text-gray-500 dark:text-gray-400 group-hover:text-black dark:group-hover:text-white"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+          </svg>
+        </button>
+      </div>
+
+    </div>
+  </div>
+</footer>
+
+<script>
+  const btn = document.getElementById('backToTopBtn');
+  if (btn) {
+    btn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+</script>
